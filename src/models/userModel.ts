@@ -21,8 +21,12 @@ class UserModel {
 
   public getAll = async () => {
     const users = await this._prisma.user.findMany();
-    console.log(users);
     return users;
+  };
+
+  public getById = async (id: string) => {
+    const userById = await this._prisma.user.findUnique({ where: { id: parseInt(id, 10) } });
+    return userById;
   };
 }
 

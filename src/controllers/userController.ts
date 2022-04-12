@@ -6,6 +6,8 @@ import userService from '../services/userService';
 class UserController {
   public path = '/user';
 
+  public pathWhitId = '/user/:id';
+
   private readonly _UserService = userService;
 
   public router = express.Router();
@@ -17,6 +19,7 @@ class UserController {
   public initializeRoutes() {
     this.router.post(this.path, this.create);
     this.router.get(this.path, this.getAll);
+    this.router.get(this.pathWhitId, this.getById);
   }
 
   public create = async (
@@ -40,6 +43,20 @@ class UserController {
   ) => {
     try {
       const users = await this._UserService.getAll();
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getById = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const users = await this._UserService.getById(id);
       res.status(200).json(users);
     } catch (error) {
       next(error);

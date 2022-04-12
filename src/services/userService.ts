@@ -5,7 +5,9 @@ import userModel from '../models/userModel';
 class UserService {
   private readonly _UserModel = userModel;
 
-  private _USER_ALREADY_EXIST = new HttpException(422, 'Email already registered');
+  private _USER_ALREADY_EXIST = new HttpException(422, 'Email Already Registered');
+
+  private _USER_NOT_FOUND = new HttpException(404, 'User Not Found');
 
   public create = async (userData: IUser) => {
     const checkUserExist = await this._UserModel.getByEmail(userData.email);
@@ -17,6 +19,12 @@ class UserService {
   public getAll = async () => {
     const userCreated: IUser[] = await this._UserModel.getAll();
     return userCreated;
+  };
+
+  public getById = async (id: string) => {
+    const userById = await this._UserModel.getById(id);
+    if (!userById) throw this._USER_NOT_FOUND;
+    return userById;
   };
 }
 
