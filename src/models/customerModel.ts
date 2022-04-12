@@ -19,6 +19,11 @@ class CustomerModel {
 
     return customerCreated;
   };
+
+  public getByEmail = async (email: string) => {
+    const customerByEmail = await this._prisma.customer.findUnique({ where: { email } });
+    return customerByEmail;
+  };
 }
 
 export default new CustomerModel();
