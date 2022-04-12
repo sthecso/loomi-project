@@ -1,4 +1,6 @@
 import * as express from 'express';
+import schemaBase from '../utils/schemaBase';
+import validateUser from '../utils/validations';
 import userService from '../services/userService';
 
 class UserController {
@@ -22,6 +24,7 @@ class UserController {
     next: express.NextFunction,
   ) => {
     try {
+      schemaBase(validateUser, req.body);
       const userCreated = await this.Service.create(req.body);
       res.status(201).json(userCreated);
     } catch (error) {
