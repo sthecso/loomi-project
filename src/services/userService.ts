@@ -26,6 +26,12 @@ class UserService {
     if (!userById) throw this._USER_NOT_FOUND;
     return userById;
   };
+
+  public update = async (id: string, userData: IUser) => {
+    await this.getById(id);
+    const userUpdated = await this._UserModel.update(id, userData);
+    return userUpdated;
+  };
 }
 
 export default new UserService();

@@ -28,6 +28,21 @@ class UserModel {
     const userById = await this._prisma.user.findUnique({ where: { id: parseInt(id, 10) } });
     return userById;
   };
+
+  public update = async (id: string, userData: IUser) => {
+    const { role, email, password } = userData;
+
+    const userUpdated = await this._prisma.user.update({
+      where: { id: parseInt(id, 10) },
+      data: {
+        role,
+        email,
+        password,
+      },
+    });
+
+    return userUpdated;
+  };
 }
 
 export default new UserModel();
