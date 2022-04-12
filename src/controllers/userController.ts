@@ -6,6 +6,8 @@ import userService from '../services/userService';
 class UserController {
   public path = '/user';
 
+  public pathWhitId = '/user/:id';
+
   private readonly _UserService = userService;
 
   public router = express.Router();
@@ -17,6 +19,9 @@ class UserController {
   public initializeRoutes() {
     this.router.post(this.path, this.create);
     this.router.get(this.path, this.getAll);
+    this.router.get(this.pathWhitId, this.getById);
+    this.router.put(this.pathWhitId, this.update);
+    this.router.delete(this.pathWhitId, this.remove);
   }
 
   public create = async (
@@ -34,14 +39,56 @@ class UserController {
   };
 
   public getAll = async (
+    _req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const users = await this._UserService.getAll();
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getById = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const users = await this._UserService.getById(id);
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public update = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
   ) => {
     try {
       schemaBase(validateUser, req.body);
-      const users = await this._UserService.getAll();
-      res.status(200).json(users);
+      const { id } = req.params;
+      const userUpdated = await this._UserService.update(id, req.body);
+      res.status(200).json(userUpdated);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public remove = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const deletedUser = await this._UserService.remove(id);
+      res.status(200).json(deletedUser);
     } catch (error) {
       next(error);
     }
