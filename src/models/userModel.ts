@@ -16,6 +16,8 @@ class UserModel {
 
     return userCreated;
   };
+
+  public getAll = async () => this._prisma.user.findMany();
 }
 
 export default new UserModel();
