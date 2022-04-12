@@ -1,4 +1,5 @@
 import * as express from 'express';
+import errorMiddlweare from './controllers/middlewares/errorMiddleware';
 import joiError from './controllers/middlewares/joiError';
 import userController from './controllers/userController';
 
@@ -30,6 +31,7 @@ class App {
 
   public initializeErrorHandling() {
     this.app.use(joiError);
+    this.app.use(errorMiddlweare);
   }
 
   public start(PORT: string | number):void {

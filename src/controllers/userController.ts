@@ -34,12 +34,11 @@ class UserController {
   };
 
   public getAll = async (
-    req: express.Request,
+    _req: express.Request,
     res: express.Response,
     next: express.NextFunction,
   ) => {
     try {
-      schemaBase(validateUser, req.body);
       const users = await this._UserService.getAll();
       res.status(200).json(users);
     } catch (error) {

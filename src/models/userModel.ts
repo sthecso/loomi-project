@@ -17,7 +17,13 @@ class UserModel {
     return userCreated;
   };
 
-  public getAll = async () => this._prisma.user.findMany();
+  public getByEmail = async (email: string) => this._prisma.user.findUnique({ where: { email } });
+
+  public getAll = async () => {
+    const users = await this._prisma.user.findMany();
+    console.log(users);
+    return users;
+  };
 }
 
 export default new UserModel();
