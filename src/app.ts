@@ -1,4 +1,5 @@
 import * as express from 'express';
+import joiError from './controllers/middlewares/joiError';
 import userController from './controllers/userController';
 
 class App {
@@ -8,6 +9,7 @@ class App {
     this.app = express();
     this.config();
     this.routes();
+    this.initializeErrorHandling();
   }
 
   private config():void {
@@ -24,6 +26,10 @@ class App {
 
   public routes() {
     this.app.use(userController.router);
+  }
+
+  public initializeErrorHandling() {
+    this.app.use(joiError);
   }
 
   public start(PORT: string | number):void {
