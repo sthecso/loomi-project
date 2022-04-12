@@ -6,7 +6,7 @@ import userService from '../services/userService';
 class UserController {
   public path = '/user';
 
-  public Service = userService;
+  private readonly _UserService = userService;
 
   public router = express.Router();
 
@@ -16,6 +16,7 @@ class UserController {
 
   public initializeRoutes() {
     this.router.post(this.path, this.create);
+    this.router.get(this.path, this.getAll);
   }
 
   public create = async (
@@ -25,8 +26,22 @@ class UserController {
   ) => {
     try {
       schemaBase(validateUser, req.body);
-      const userCreated = await this.Service.create(req.body);
+      const userCreated = await this._UserService.create(req.body);
       res.status(201).json(userCreated);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getAll = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      schemaBase(validateUser, req.body);
+      const users = await this._UserService.getAll();
+      res.status(200).json(users);
     } catch (error) {
       next(error);
     }
