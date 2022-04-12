@@ -1,6 +1,6 @@
 export interface ICustomer {
   role: string
-  nome: string
+  name: string
   email: string
   password: string
   telephone: string
