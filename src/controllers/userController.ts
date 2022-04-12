@@ -1,6 +1,6 @@
 import * as express from 'express';
 import schemaBase from '../utils/schemaBase';
-import validateUser from '../utils/validations';
+import { validateUser } from '../utils/validations';
 import userService from '../services/userService';
 
 class UserController {
