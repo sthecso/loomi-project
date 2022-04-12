@@ -8,39 +8,39 @@ datasource db {
 }
 
 
-model Usuario {
+model User {
   id Int @id @default(autoincrement())
   role String
   email String @unique
-  senha String
+  password String
 }
 
-model Cliente {
+model Customer {
   id Int @id @default(autoincrement())
   role String
   nome String
   email String @unique
-  senha String
-  telefone String
-  endereco String
-  pedidos Pedido[]
+  password String
+  telephone String
+  address String
+  orders Order[]
 }
 
-model Produto {
+model Product {
   id Int @id @default(autoincrement())
-  nome String
-  codigo String
-  caracteristicas String
-  imagem String
-  pedidos Pedido[]
+  name String
+  code String
+  characteristics String
+  image String
+  orders Order[]
 } 
 
-model Pedido {
-  cliente Cliente @relation(fields: [clienteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  clienteId Int
-  listaDeProdutos Produto @relation(fields: [produtoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  produtoId Int
-  dataDoPedido DateTime @default(now())
+model Order {
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  customerId Int
+  products Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId Int
+  orderDate DateTime @default(now())
 
-  @@id([clienteId, produtoId])
+  @@id([customerId, productId])
 }
