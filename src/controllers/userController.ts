@@ -71,6 +71,7 @@ class UserController {
     next: express.NextFunction,
   ) => {
     try {
+      schemaBase(validateUser, req.body);
       const { id } = req.params;
       const userUpdated = await this._UserService.update(id, req.body);
       res.status(200).json(userUpdated);
