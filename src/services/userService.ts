@@ -32,6 +32,12 @@ class UserService {
     const userUpdated = await this._UserModel.update(id, userData);
     return userUpdated;
   };
+
+  public remove = async (id: string) => {
+    await this.getById(id);
+    const deletedUser = await this._UserModel.remove(id);
+    return deletedUser;
+  };
 }
 
 export default new UserService();

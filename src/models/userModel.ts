@@ -43,6 +43,11 @@ class UserModel {
 
     return userUpdated;
   };
+
+  public remove = async (id: string) => {
+    const deletedUser = await this._prisma.user.delete({ where: { id: parseInt(id, 10) } });
+    return deletedUser;
+  };
 }
 
 export default new UserModel();

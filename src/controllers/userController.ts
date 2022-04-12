@@ -21,6 +21,7 @@ class UserController {
     this.router.get(this.path, this.getAll);
     this.router.get(this.pathWhitId, this.getById);
     this.router.put(this.pathWhitId, this.update);
+    this.router.delete(this.pathWhitId, this.remove);
   }
 
   public create = async (
@@ -73,6 +74,20 @@ class UserController {
       const { id } = req.params;
       const userUpdated = await this._UserService.update(id, req.body);
       res.status(200).json(userUpdated);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public remove = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const deletedUser = await this._UserService.remove(id);
+      res.status(200).json(deletedUser);
     } catch (error) {
       next(error);
     }
