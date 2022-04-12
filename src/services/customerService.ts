@@ -1,7 +1,7 @@
 import customer from '../models/customerModel';
 import { ICustomer } from '../interfaces/ICustomer';
 
-class UserService {
+class CustomerService {
   private readonly _Customer = customer;
 
   public create = async (customerData: ICustomer) => {
@@ -10,4 +10,4 @@ class UserService {
   };
 }
 
-export default new UserService();
+export default new CustomerService();
