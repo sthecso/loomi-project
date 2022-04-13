@@ -1,9 +1,12 @@
 import HttpException from '../utils/httpException';
 import customer from '../models/customerModel';
 import { ICustomer } from '../interfaces/ICustomer';
+import SendMail from '../utils/sendMail';
 
 class CustomerService {
   private readonly _CustomerModel = customer;
+
+  private SendMail = new SendMail();
 
   private _USER_ALREADY_EXIST = new HttpException(422, 'Email Already Registered');
 
@@ -13,6 +16,19 @@ class CustomerService {
     const checkUserExist = await this._CustomerModel.getByEmail(customerData.email);
     if (checkUserExist) throw this._USER_ALREADY_EXIST;
     const customerCreated = await this._CustomerModel.create(customerData);
+    await this.SendMail.sendMail({
+      to: {
+        name: customerCreated.name || 'Customer',
+        email: customerCreated.email,
+      },
+      from: {
+        name: 'Equipe do Meu App',
+        email: 'email@loomi.com',
+      },
+      subject: 'Seja bem-vindo à Loomi Store',
+      body: '<p>Você já pode fazer login em nossa plataforma.</p>',
+    });
+
     return customerCreated;
   };
 
