@@ -3,10 +3,7 @@
 
 import * as express from 'express';
 import uploadFile from '../config/multer';
-// import schemaBase from '../utils/schemaBase';
-// import { validateProduct } from '../utils/validations';
 import productService from '../services/productService';
-// import { IUploadedFile } from '../interfaces/IUploadedFile';
 
 class ProductController {
   public path = '/products';
@@ -20,7 +17,6 @@ class ProductController {
   }
 
   public initializeRoutes() {
-    console.log('entrei');
     this.router.post(this.path, this.create);
   }
 
@@ -45,7 +41,6 @@ class ProductController {
       const upload = uploadResult.path;
       const productCreated = await this._ProductService.create(req.body, upload);
       res.status(201).json(productCreated);
-
     } catch (error) {
       next(error);
     }
