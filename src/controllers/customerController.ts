@@ -6,6 +6,8 @@ import customerService from '../services/customerService';
 class CustomerController {
   public path = '/customer';
 
+  public pathWithId = '/customer/:id';
+
   private readonly _CustomerService = customerService;
 
   public router = express.Router();
@@ -17,6 +19,7 @@ class CustomerController {
   public initializeRoutes() {
     this.router.post(this.path, this.create);
     this.router.get(this.path, this.getAll);
+    this.router.get(this.pathWithId, this.getById);
   }
 
   public create = async (
@@ -41,6 +44,20 @@ class CustomerController {
     try {
       const customers = await this._CustomerService.getAll();
       res.status(200).json(customers);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getById = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const customerById = await this._CustomerService.getById(id);
+      res.status(200).json(customerById);
     } catch (error) {
       next(error);
     }

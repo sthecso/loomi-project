@@ -26,6 +26,12 @@ class CustomerModel {
   };
 
   public getAll = async () => this._prisma.customer.findMany();
+
+  public getById = async (id: string) => {
+    const customerById = await this._prisma.customer.findUnique({
+      where: { id: parseInt(id, 10) } });
+    return customerById;
+  };
 }
 
 export default new CustomerModel();
