@@ -32,6 +32,23 @@ class CustomerModel {
       where: { id: parseInt(id, 10) } });
     return customerById;
   };
+
+  public update = async (id: string, customerData: ICustomer) => {
+    const { role, name, email, password, telephone, address } = customerData;
+    const customerUpdated = await this._prisma.customer.update({
+      where: { id: parseInt(id, 10) },
+      data: {
+        role,
+        name,
+        email,
+        password,
+        telephone,
+        address,
+      },
+    });
+
+    return customerUpdated;
+  };
 }
 
 export default new CustomerModel();

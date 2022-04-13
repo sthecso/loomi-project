@@ -26,6 +26,12 @@ class CustomerService {
     if (!customerById) throw this._CUSTOMER_NOT_FOUND;
     return customerById;
   };
+
+  public update = async (id: string, customerData: ICustomer) => {
+    await this.getById(id);
+    const customerUpdated = await this._CustomerModel.update(id, customerData);
+    return customerUpdated;
+  };
 }
 
 export default new CustomerService();

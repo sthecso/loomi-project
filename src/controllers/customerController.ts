@@ -20,6 +20,7 @@ class CustomerController {
     this.router.post(this.path, this.create);
     this.router.get(this.path, this.getAll);
     this.router.get(this.pathWithId, this.getById);
+    this.router.post(this.pathWithId, this.update);
   }
 
   public create = async (
@@ -58,6 +59,21 @@ class CustomerController {
       const { id } = req.params;
       const customerById = await this._CustomerService.getById(id);
       res.status(200).json(customerById);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public update = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      schemaBase(validateCustomer, req.body);
+      const { id } = req.params;
+      const customerUpdated = await this._CustomerService.update(id, req.body);
+      res.status(200).json(customerUpdated);
     } catch (error) {
       next(error);
     }
