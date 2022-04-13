@@ -5,6 +5,7 @@
   "main": "./build/server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "npx tsc ./src/server.ts",
     "start": "node .",
     "compose:up": "(docker compose up -d --build)",
     "compose:down": "(docker compose down --remove-orphans)",

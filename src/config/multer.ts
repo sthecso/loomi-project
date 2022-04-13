@@ -40,6 +40,6 @@ const uploadFile = multer({
       callback(new Error('Invalid file type.'));
     }
   },
-});
+}).single('picture');
 
 export default uploadFile;
