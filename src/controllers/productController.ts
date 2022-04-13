@@ -17,7 +17,6 @@ class ProductController {
   }
 
   public initializeRoutes() {
-    console.log('entrei');
     this.router.post(this.path, this.create);
   }
 
