@@ -24,6 +24,8 @@ class CustomerModel {
     const customerByEmail = await this._prisma.customer.findUnique({ where: { email } });
     return customerByEmail;
   };
+
+  public getAll = async () => this._prisma.customer.findMany();
 }
 
 export default new CustomerModel();

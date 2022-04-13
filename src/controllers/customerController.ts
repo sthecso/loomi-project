@@ -16,6 +16,7 @@ class CustomerController {
 
   public initializeRoutes() {
     this.router.post(this.path, this.create);
+    this.router.get(this.path, this.getAll);
   }
 
   public create = async (
@@ -27,6 +28,19 @@ class CustomerController {
       schemaBase(validateCustomer, req.body);
       const customerCreated = await this._CustomerService.create(req.body);
       res.status(201).json(customerCreated);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getAll = async (
+    _req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const customers = await this._CustomerService.getAll();
+      res.status(200).json(customers);
     } catch (error) {
       next(error);
     }
