@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "npx tsc ./src/server.ts",
-    "start": "node .",
+    "start": "npm run tsc && node .",
     "compose:up": "(docker compose up -d --build)",
     "compose:down": "(docker compose down --remove-orphans)",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
