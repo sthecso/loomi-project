@@ -1,14 +1,14 @@
 import * as express from 'express';
 import schemaBase from '../utils/schemaBase';
-import { validateUser } from '../utils/validations';
-import userService from '../services/userService';
+import { validateCustomer } from '../utils/validations';
+import customerService from '../services/customerService';
 
-class UserController {
-  public path = '/user';
+class CustomerController {
+  public path = '/customer';
 
-  public pathWhitId = '/user/:id';
+  public pathWithId = '/customer/:id';
 
-  private readonly _UserService = userService;
+  private readonly _CustomerService = customerService;
 
   public router = express.Router();
 
@@ -19,9 +19,8 @@ class UserController {
   public initializeRoutes() {
     this.router.post(this.path, this.create);
     this.router.get(this.path, this.getAll);
-    this.router.get(this.pathWhitId, this.getById);
-    this.router.put(this.pathWhitId, this.update);
-    this.router.delete(this.pathWhitId, this.remove);
+    this.router.get(this.pathWithId, this.getById);
+    this.router.post(this.pathWithId, this.update);
   }
 
   public create = async (
@@ -30,9 +29,9 @@ class UserController {
     next: express.NextFunction,
   ) => {
     try {
-      schemaBase(validateUser, req.body);
-      const userCreated = await this._UserService.create(req.body);
-      res.status(201).json(userCreated);
+      schemaBase(validateCustomer, req.body);
+      const customerCreated = await this._CustomerService.create(req.body);
+      res.status(201).json(customerCreated);
     } catch (error) {
       next(error);
     }
@@ -44,8 +43,8 @@ class UserController {
     next: express.NextFunction,
   ) => {
     try {
-      const users = await this._UserService.getAll();
-      res.status(200).json(users);
+      const customers = await this._CustomerService.getAll();
+      res.status(200).json(customers);
     } catch (error) {
       next(error);
     }
@@ -58,8 +57,8 @@ class UserController {
   ) => {
     try {
       const { id } = req.params;
-      const users = await this._UserService.getById(id);
-      res.status(200).json(users);
+      const customerById = await this._CustomerService.getById(id);
+      res.status(200).json(customerById);
     } catch (error) {
       next(error);
     }
@@ -71,10 +70,10 @@ class UserController {
     next: express.NextFunction,
   ) => {
     try {
-      schemaBase(validateUser, req.body);
+      schemaBase(validateCustomer, req.body);
       const { id } = req.params;
-      const userUpdated = await this._UserService.update(id, req.body);
-      res.status(200).json(userUpdated);
+      const customerUpdated = await this._CustomerService.update(id, req.body);
+      res.status(200).json(customerUpdated);
     } catch (error) {
       next(error);
     }
@@ -87,12 +86,12 @@ class UserController {
   ) => {
     try {
       const { id } = req.params;
-      const deletedUser = await this._UserService.remove(id);
-      res.status(200).json(deletedUser);
+      const deletedCustomer = await this._CustomerService.remove(id);
+      res.status(200).json(deletedCustomer);
     } catch (error) {
       next(error);
     }
   };
 }
 
-export default new UserController();
+export default new CustomerController();

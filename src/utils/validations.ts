@@ -6,4 +6,19 @@ const validateUser: Joi.Schema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-export default validateUser;
+const validateCustomer: Joi.Schema = Joi.object({
+  role: Joi.string().required(),
+  name: Joi.string().required(),
+  email: Joi.string().min(8).required(),
+  password: Joi.string().min(6).required(),
+  telephone: Joi.string().length(11).pattern(/^[0-9]+$/).required()
+    .messages({
+      'string.pattern.base': 'Phone number must have 11 digits.',
+    }),
+  address: Joi.string().required(),
+});
+
+export {
+  validateUser,
+  validateCustomer,
+};
