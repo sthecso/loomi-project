@@ -49,6 +49,11 @@ class CustomerModel {
 
     return customerUpdated;
   };
+
+  public remove = async (id: string) => {
+    const deletedCustomer = await this._prisma.customer.delete({ where: { id: parseInt(id, 10) } });
+    return deletedCustomer;
+  };
 }
 
 export default new CustomerModel();

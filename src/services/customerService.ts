@@ -32,6 +32,12 @@ class CustomerService {
     const customerUpdated = await this._CustomerModel.update(id, customerData);
     return customerUpdated;
   };
+
+  public remove = async (id: string) => {
+    await this.getById(id);
+    const deletedCustomer = await this._CustomerModel.remove(id);
+    return deletedCustomer;
+  };
 }
 
 export default new CustomerService();

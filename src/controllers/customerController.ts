@@ -78,6 +78,20 @@ class CustomerController {
       next(error);
     }
   };
+
+  public remove = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const deletedCustomer = await this._CustomerService.remove(id);
+      res.status(200).json(deletedCustomer);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default new CustomerController();
