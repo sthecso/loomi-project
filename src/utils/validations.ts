@@ -18,7 +18,15 @@ const validateCustomer: Joi.Schema = Joi.object({
   address: Joi.string().required(),
 });
 
+const validateProduct: Joi.Schema = Joi.object({
+  name: Joi.string().required(),
+  code: Joi.string().required(),
+  characteristics: Joi.string().required(),
+  image: Joi.string().required(),
+});
+
 export {
   validateUser,
   validateCustomer,
+  validateProduct,
 };
