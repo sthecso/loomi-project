@@ -4,7 +4,7 @@ Backend challenge
 API Rest para um sistema de gerenciamento de e-commerce com usuário admin, cliente, produtos e pedidos.
 
 ### Recommendations
--Criando uma conta Mailtrap(https://mailtrap.io/) e usando as suas configurações de ambiente no caminho do arquivo descrito abaixo, você poderá ter acesso ao fluxo de email quando um usuário admin ou cliente forem cadastrados.
+-Criando uma conta Mailtrap(https://mailtrap.io/) e usando as seu user e senha no caminho do arquivo descrito abaixo, você poderá ter acesso ao fluxo de email quando um usuário admin ou cliente forem cadastrados.
 ```
 loomi-project    
 │
