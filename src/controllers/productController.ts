@@ -3,9 +3,10 @@
 
 import * as express from 'express';
 import uploadFile from '../config/multer';
-import schemaBase from '../utils/schemaBase';
-import { validateProduct } from '../utils/validations';
+// import schemaBase from '../utils/schemaBase';
+// import { validateProduct } from '../utils/validations';
 import productService from '../services/productService';
+// import { IUploadedFile } from '../interfaces/IUploadedFile';
 
 class ProductController {
   public path = '/products';
@@ -19,8 +20,20 @@ class ProductController {
   }
 
   public initializeRoutes() {
-    this.router.post(this.path, uploadFile.single('picture'), this.create);
+    console.log('entrei');
+    this.router.post(this.path, this.create);
   }
+
+  public handleSingleUploadFile = async (req: express.Request, res: express.Response) => (
+    new Promise<any>((resolve, reject): void => {
+      uploadFile(req, res, (error) => {
+        if (error) {
+          reject(error);
+        }
+
+        resolve({ file: req.file, body: req.body });
+      });
+    }));
 
   public create = async (
     req: express.Request,
@@ -28,11 +41,11 @@ class ProductController {
     next: express.NextFunction,
   ) => {
     try {
-      schemaBase(validateProduct, req.body);
-      if (req.file?.path) {
-        const productCreated = await this._ProductService.create(req.body, req.file?.path);
-        res.status(201).json(productCreated);
-      }
+      const uploadResult = await this.handleSingleUploadFile(req, res);
+      const upload = uploadResult.path;
+      const productCreated = await this._ProductService.create(req.body, upload);
+      res.status(201).json(productCreated);
+
     } catch (error) {
       next(error);
     }
