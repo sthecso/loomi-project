@@ -4,6 +4,7 @@ import customerController from './controllers/customerController';
 import errorMiddlweare from './controllers/middlewares/errorMiddleware';
 import joiError from './controllers/middlewares/joiError';
 import productController from './controllers/productController';
+import loginController from './controllers/loginController';
 
 class App {
   public app: express.Express;
@@ -31,6 +32,7 @@ class App {
   public routes() {
     this.app.use(userController.router);
     this.app.use(customerController.router);
+    this.app.use(loginController.router);
     this.app.use(productController.router);
   }
 

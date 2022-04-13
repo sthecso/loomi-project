@@ -1,3 +1,6 @@
+/* Fiz a tentativa de fazer o upload da imagem que estaria no product com o multer, mas não consegui executá-la. Seria feita uma request pelo user onde seriam enviados os dados do produto e seriam registrados no bando de dados, sendo a imagem o path.
+ */
+
 import * as express from 'express';
 import uploadFile from '../config/multer';
 // import schemaBase from '../utils/schemaBase';
@@ -42,6 +45,7 @@ class ProductController {
       const upload = uploadResult.path;
       const productCreated = await this._ProductService.create(req.body, upload);
       res.status(201).json(productCreated);
+
     } catch (error) {
       next(error);
     }
