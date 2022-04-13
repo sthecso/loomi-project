@@ -22,7 +22,7 @@ const validateProduct: Joi.Schema = Joi.object({
   name: Joi.string().required(),
   code: Joi.string().required(),
   characteristics: Joi.string().required(),
-  image: Joi.string().required(),
+  image: Joi.string(),
 });
 
 export {

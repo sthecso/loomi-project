@@ -3,6 +3,7 @@ import userController from './controllers/userController';
 import customerController from './controllers/customerController';
 import errorMiddlweare from './controllers/middlewares/errorMiddleware';
 import joiError from './controllers/middlewares/joiError';
+import productController from './controllers/productController';
 
 class App {
   public app: express.Express;
@@ -24,11 +25,13 @@ class App {
 
     this.app.use(accessControl);
     this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
   }
 
   public routes() {
     this.app.use(userController.router);
     this.app.use(customerController.router);
+    this.app.use(productController.router);
   }
 
   public initializeErrorHandling() {
